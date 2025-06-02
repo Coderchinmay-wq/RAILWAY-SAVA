@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailSeva - Indian Railways Passenger Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .nav-corner-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .nav-corner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            color: #333;
+        }
+
+        .home-btn {
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+            color: #333;
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+        }
+
+        /* Page Structure */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Page 1: Login */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 0;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .login-container .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            color: white;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            color: #333;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Page 2: Verification */
+        .verification-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 0;
+        }
+
+        .verification-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .verification-container h2 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .verification-container p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .google-btn {
+            background: linear-gradient(45deg, #4285f4, #34a853);
+            color: white;
+        }
+
+        .facebook-btn {
+            background: linear-gradient(45deg, #1877f2, #42a5f5);
+            color: white;
+        }
+
+        .email-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .divider {
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .divider span {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0 20px;
+            font-weight: 600;
+        }
+
+        /* Page 3: Main Dashboard */
+        .main-dashboard {
+            padding-top: 100px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero-section h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Train Images Section */
+        .train-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .train-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+        }
+
+        .train-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(31, 38, 135, 0.5);
+        }
+
+        .train-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .train-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .train-card:hover .train-image img {
+            transform: scale(1.05);
+        }
+
+        .train-card h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .train-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .train-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .train-specs {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .train-specs h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .train-specs ul {
+            list-style: none;
+            font-size: 14px;
+        }
+
+        .train-specs li {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .train-specs li::before {
+            content: "•";
+            color: #ffd700;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Services Section */
+        .services-section {
+            margin-top: 50px;
+        }
+
+        .services-section h2 {
+            color: white;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(31, 38, 135, 0.5);
+        }
+
+        .service-card h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Individual Service Pages */
+        .service-page {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin-top: 30px;
+        }
+
+        .service-page h2 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .service-page h3 {
+            color: #ffd700;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .service-page p, .service-page li {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .service-page ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Forms and Interactive Elements */
+        .interactive-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .interactive-form input, .interactive-form select, .interactive-form textarea {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            width: calc(50% - 10px);
+        }
+
+        .interactive-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .interactive-form button {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Emergency Contacts */
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .emergency-card {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        .emergency-card h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .emergency-card .number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Source Links */
+        .source-links {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .source-links h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .source-links a {
+            color: #87ceeb;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .source-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+
+        /* Navigation Helper */
+        .nav-center {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-nav {
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .main-dashboard {
+                padding-top: 20px;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .interactive-form input {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .train-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <button class="nav-corner-btn back-btn" id="backBtn" onclick="goBack()">← Back</button>
+        <button class="nav-corner-btn home-btn" id="homeBtn" onclick="goHome()" style="display: none;">🏠 Home</button>
+        <button class="nav-corner-btn logout-btn" id="logoutBtn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="container">
+        <!-- Page 1: Login -->
+        <div id="loginPage" class="page login-page active">
+            <div class="login-container">
+                <h1>🚂 RailSeva</h1>
+                <p class="subtitle">Indian Railways Passenger Portal</p>
+                <form onsubmit="proceedToVerification(event)">
+                    <div class="form-group">
+                        <label for="username">Username or Mobile Number</label>
+                        <input type="text" id="username" placeholder="Enter username or mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Continue to Verification</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page 2: Verification -->
+        <div id="verificationPage" class="page verification-page">
+            <div class="verification-container">
+                <h2>🔐 Account Verification</h2>
+                <p>Please verify your account using one of the following methods to ensure secure access to RailSeva services.</p>
+                
+                <div class="social-login">
+                    <button class="social-btn google-btn" onclick="verifyWithGoogle()">
+                        <span>🔍</span>
+                        Continue with Google
+                    </button>
+                    <button class="social-btn facebook-btn" onclick="verifyWithFacebook()">
+                        <span>📘</span>
+                        Continue with Facebook
+                    </button>
+                    <button class="social-btn email-btn" onclick="verifyWithEmail()">
+                        <span>📧</span>
+                        Verify with Email OTP
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <button class="login-btn" onclick="skipVerification()">
+                    Skip Verification (Demo Mode)
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 3: Main Dashboard -->
+        <div id="mainDashboard" class="page main-dashboard">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1>Welcome to RailSeva</h1>
+                <p>Your Complete Indian Railways Passenger Portal</p>
+            </div>
+
+            <!-- Train Gallery Section -->
+            <div class="train-gallery">
+                <div class="train-card">
+                    <div class="train-image">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&h=300&fit=crop&crop=center" alt="Vande Bharat Express">
+                    </div>
+                    <h3>Vande Bharat Express</h3>
+                    <p>India's indigenous semi-high speed train offering world-class amenities and comfortable travel experience with state-of-the-art technology.</p>
+                    <div class="train-features">
+                        <span class="feature-tag">180 km/h</span>
+                        <span class="feature-tag">AC Coach</span>
+                        <span class="feature-tag">WiFi</span>
+                        <span class="feature-tag">Premium</span>
+                    </div>
+                    <div class="train-specs">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Automatic doors with touch-free entry</li>
+                            <li>GPS-based passenger information system</li>
+                            <li>On-board WiFi and entertainment</li>
+                            <li>Bio-vacuum toilets</li>
+                            <li>LED lighting and rotating seats</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="train-card">
+                    <div class="train-image">
+                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=500&h=300&fit=crop&crop=center" alt="Rajdhani Express">
+                    </div>
+                    <h3>Rajdhani Express</h3>
+                    <p>Premium luxury train connecting major cities with high-speed travel and excellent onboard services including meals and comfortable berths.</p>
+                    <div class="train-features">
+                        <span class="feature-tag">130 km/h</span>
+                        <span class="feature-tag">Premium AC</span>
+                        <span class="feature-tag">Meals</span>
+                        <span class="feature-tag">Luxury</span>
+                    </div>
+                    <div class="train-specs">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>All AC coaches with premium interiors</li>
+                            <li>Complimentary meals and beverages</li>
+                            <li>Priority booking and boarding</li>
+                            <li>Comfortable sleeping berths</li>
+                            <li>Connecting major metros</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="train-card">
+                    <div class="train-image">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=300&fit=crop&crop=center" alt="Shatabdi Express">
+                    </div>
+                    <h3>Shatabdi Express</h3>
+                    <p>Day-time super-fast train service connecting major cities with air-conditioned comfort, catering services, and convenient timing.</p>
+                    <div class="train-features">
+                        <span class="feature-tag">110 km/h</span>
+                        <span class="feature-tag">Day Train</span>
+                        <span class="feature-tag">Catering</span>
+                        <span class="feature-tag">Express</span>
+                    </div>
+                    <div class="train-specs">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Day journey with same-day return</li>
+                            <li>Executive and Chair Car options</li>
+                            <li>Onboard catering services</li>
+                            <li>Business-friendly timings</li>
+                            <li>Comfortable seating arrangements</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="train-card">
+                    <div class="train-image">
+                        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=500&h=300&fit=crop&crop=center" alt="Local Suburban Train">
+                    </div>
+                    <h3>Local/Suburban Trains</h3>
+                    <p>Essential urban transport connecting millions of commuters daily across major metropolitan cities with frequent services.</p>
+                    <div class="train-features">
+                        <span class="feature-tag">80 km/h</span>
+                        <span class="feature-tag">Local</span>
+                        <span class="feature-tag">Frequent</span>
+                        <span class="feature-tag">Affordable</span>
+                    </div>
+                    <div class="train-specs">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>High frequency services every few minutes</li>
+                            <li>Ladies special compartments</li>
+                            <li>Multiple class options</li>
+                            <li>Affordable pricing for daily commute</li>
+                            <li>Extensive network coverage</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="train-card">
+                    <div class="train-image">
+                        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=500&h=300&fit=crop&crop=center" alt="Duronto Express">
+                    </div>
+                    <h3>Duronto Express</h3>
+                    <p>Non-stop long-distance trains connecting major cities without intermediate commercial stops for faster journey times.</p>
+                    <div class="train-features">
+                        <span class="feature-tag">120 km/h</span>
+                        <span class="feature-tag">Non-stop</span>
+                        <span class="feature-tag">Long Distance</span>
+                        <span class="feature-tag">Fast</span>
+                    </div>
+                    <div class="train-specs">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Direct connectivity between metros</li>
+                            <li>No intermediate commercial stops</li>
+                            <li>Multiple AC and sleeper options</li>
+                            <li>Faster travel times</li>
+                            <li>Modern amenities and services</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="train-card">
+                    <div class="train-image">
+                        <img src="https://images.unsplash.com/photo-1517263904808-5dc91e3e7044?w=500&h=300&fit=crop&crop=center" alt="Garib Rath Express">
+                    </div>
+                    <h3>Garib Rath Express</h3>
+                    <p>Budget-friendly AC train service providing air-conditioned travel at affordable prices with basic but comfortable amenities.</p>
+                    <div class="train-features">
+                        <span class="feature-tag">100 km/h</span>
+                        <span class="feature-tag">Budget AC</span>
+                        <span class="feature-tag">Affordable</span>
+                        <span class="feature-tag">Value</span>
+                    </div>
+                    <div class="train-specs">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Air-conditioned coaches at budget prices</li>
+                            <li>Higher passenger capacity</li>
+                            <li>Basic but clean amenities</li>
+                            <li>Connects major cities affordably</li>
+                            <li>Popular among budget travelers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="services-section">
+                <h2>🚀 RailSeva Services</h2>
+                <div class="services-grid">
+                    <div class="service-card" onclick="showServicePage('trainStatus')">
+                        <span class="service-icon">🚄</span>
+                        <h3>Live Train Status</h3>
+                        <p>Track your train's real-time location, speed, route map, and arrival/departure times by train number.</p>
+                    </div>
+
+                    <div class="service-card" onclick="showServicePage('emergency')">
+                        <span class="service-icon">🚨</span>
+                        <h3>Emergency Contacts</h3>
+                        <p>Access RPF helpline, medical emergency contacts, women helpline, and station master numbers.</p>
+                    </div>
+
+                    <div class="service-card" onclick="showServicePage('safety')">
+                        <span class="service-icon">🛡️</span>
+                        <h3>Safety & Guidance</h3>
+                        <p>Official safety instructions, travel tips, do's and don'ts from Indian Railways authorities.</p>
+                    </div>
+
+                    <div class="service-card" onclick="showServicePage('booking')">
+                      <!-- Continue from where the code was incomplete -->
+<div class="service-card" onclick="showServicePage('pnrStatus')">
+    <span class="service-icon">🎫</span>
+    <h3>PNR Status Check</h3>
+    <p>Check your booking confirmation status, seat availability, and journey details using your 10-digit PNR number.</p>
+</div>
+</div>
+
+<!-- Service Pages -->
+<div id="trainStatusPage" class="service-page" style="display: none;">
+    <h2>🚄 Live Train Status</h2>
+    <p>Track your train in real-time using the train number or name. Get accurate arrival/departure times at upcoming stations.</p>
+    
+    <div class="interactive-form">
+        <h3>Check Train Status</h3>
+        <input type="text" placeholder="Enter Train Number (e.g. 12045)" id="trainNumber">
+        <input type="text" placeholder="DD/MM/YYYY" id="trainDate">
+        <button onclick="checkTrainStatus()">Track Train</button>
+    </div>
+    
+    <h3>Features:</h3>
+    <ul>
+        <li>Real-time location on map</li>
+        <li>Next 3 stations with scheduled/actual times</li>
+        <li>Current running speed</li>
+        <li>Delay information</li>
+        <li>Platform number at destination</li>
+    </ul>
+</div>
+
+<div id="emergencyPage" class="service-page" style="display: none;">
+    <h2>🚨 Emergency Contacts</h2>
+    <p>Important helpline numbers for immediate assistance during your train journey.</p>
+    
+    <div class="emergency-grid">
+        <div class="emergency-card">
+            <h4>Railway Protection Force (RPF)</h4>
+            <div class="number">182</div>
+            <p>Security emergencies</p>
+        </div>
+        <div class="emergency-card">
+            <h4>Medical Emergency</h4>
+            <div class="number">138</div>
+            <p>On-train medical assistance</p>
+        </div>
+        <div class="emergency-card">
+            <h4>Women's Helpline</h4>
+            <div class="number">1512</div>
+            <p>24/7 assistance for women passengers</p>
+        </div>
+        <div class="emergency-card">
+            <h4>General Enquiry</h4>
+            <div class="number">139</div>
+            <p>Train information & complaints</p>
+        </div>
+    </div>
+    
+    <h3>Safety Tips:</h3>
+    <ul>
+        <li>Always note your coach and seat number</li>
+        <li>Keep valuables secure while sleeping</li>
+        <li>Verify TTE identity before sharing tickets</li>
+        <li>Use chains to secure luggage</li>
+        <li>Report suspicious activity to RPF immediately</li>
+    </ul>
+</div>
+
+<div id="safetyPage" class="service-page" style="display: none;">
+    <h2>🛡️ Safety & Guidance</h2>
+    <p>Official safety guidelines from Indian Railways for a secure journey.</p>
+    
+    <h3>Passenger Safety Guidelines</h3>
+    <ul>
+        <li>Board/deboard only when train is stationary</li>
+        <li>Do not lean out of train doors/windows</li>
+        <li>Use overhead racks only for light luggage</li>
+        <li>Do not travel on train rooftops</li>
+        <li>Keep children away from train doors</li>
+        <li>Do not carry flammable materials</li>
+    </ul>
+    
+    <h3>COVID-19 Precautions</h3>
+    <ul>
+        <li>Wear masks throughout the journey</li>
+        <li>Use hand sanitizer frequently</li>
+        <li>Maintain social distancing at stations</li>
+        <li>Carry digital copy of vaccination certificate</li>
+        <li>Use contactless payment methods</li>
+    </ul>
+</div>
+
+<div id="pnrStatusPage" class="service-page" style="display: none;">
+    <h2>🎫 PNR Status Check</h2>
+    <p>Check your booking status using your 10-digit PNR number</p>
+    
+    <div class="interactive-form">
+        <h3>Check PNR Status</h3>
+        <input type="text" placeholder="Enter 10-digit PNR Number" id="pnrNumber">
+        <button onclick="checkPnrStatus()">Check Status</button>
+    </div>
+    
+    <h3>Information Provided:</h3>
+    <ul>
+        <li>Booking status: Confirmed/Waitlist/RAC</li>
+        <li>Current seat/berth number</li>
+        <li>Coach position</li>
+        <li>Chances of confirmation</li>
+        <li>Train schedule and route</li>
+    </ul>
+    
+    <div class="source-links">
+        <h3>Official Resources:</h3>
+        <a href="https://www.indianrail.gov.in" target="_blank">Indian Railways Official Website</a>
+        <a href="https://www.irctc.co.in" target="_blank">IRCTC Booking Portal</a>
+        <a href="https://www.ntes.indianrailways.gov.in" target="_blank">National Train Enquiry System</a>
+    </div>
+</div>
+</div> <!-- Close services-section -->
+</div> <!-- Close mainDashboard -->
+
+<!-- Navigation Helper -->
+<div class="nav-center">
+    <button class="nav-corner-btn home-btn" id="centerHomeBtn" onclick="goHome()">🏠 Home</button>
+</div>
+</div> <!-- Close container -->
+
+<script>
+    // Page Navigation Functions
+    function goBack() {
+        const pages = document.querySelectorAll('.page');
+        const activePage = document.querySelector('.page.active');
+        
+        if (activePage.id === 'verificationPage') {
+            showPage('loginPage');
+        } else if (activePage.id.startsWith('mainDashboard')) {
+            document.querySelector('.service-page:not([style*="none"])') 
+                ? hideServicePages() 
+                : showPage('loginPage');
+        }
+    }
+
+    function goHome() {
+        hideServicePages();
+        document.getElementById('homeBtn').style.display = 'none';
+    }
+
+    function logout() {
+        showPage('loginPage');
+        document.querySelectorAll('.nav-corner-btn').forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById(pageId).classList.add('active');
+        
+        // Update navigation buttons
+        if (pageId === 'mainDashboard') {
+            document.querySelectorAll('.nav-corner-btn').forEach(btn => {
+                btn.style.display = 'block';
+            });
+            document.getElementById('homeBtn').style.display = 'none';
+            document.querySelector('.nav-center').style.display = 'block';
+        } else {
+            document.querySelector('.nav-center').style.display = 'none';
+        }
+    }
+
+    function showServicePage(serviceId) {
+        hideServicePages();
+        document.getElementById(serviceId + 'Page').style.display = 'block';
+        document.getElementById('homeBtn').style.display = 'block';
+        document.querySelector('.nav-center').style.display = 'none';
+    }
+
+    function hideServicePages() {
+        document.querySelectorAll('.service-page').forEach(page => {
+            page.style.display = 'none';
+        });
+    }
+
+    // Login Flow
+    function proceedToVerification(e) {
+        e.preventDefault();
+        showPage('verificationPage');
+    }
+
+    function verifyWithGoogle() {
+        alert('Google verification selected. Redirecting...');
+        showDashboard();
+    }
+
+    function verifyWithFacebook() {
+        alert('Facebook verification selected. Redirecting...');
+        showDashboard();
+    }
+
+    function verifyWithEmail() {
+        alert('OTP sent to registered email. Please check your inbox.');
+        showDashboard();
+    }
+
+    function skipVerification() {
+        alert('Entering demo mode with sample data');
+        showDashboard();
+    }
+
+    function showDashboard() {
+        showPage('mainDashboard');
+    }
+
+    // Demo Functions
+    function checkTrainStatus() {
+        alert('Train status feature would show real-time data in production');
+    }
+
+    function checkPnrStatus() {
+        alert('PNR status feature would show booking details in production');
+    }
+</script>
+</body>
+</html>               
