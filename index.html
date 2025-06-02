@@ -448,6 +448,11 @@
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
             border: 1px solid rgba(255, 255, 255, 0.18);
             margin-top: 30px;
+            display: none;
+        }
+
+        .service-page.active {
+            display: block;
         }
 
         .service-page h2 {
@@ -580,6 +585,49 @@
             display: none;
         }
 
+        /* PNR Status Results */
+        .pnr-result {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .pnr-result.active {
+            display: block;
+        }
+
+        .pnr-result h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .pnr-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .pnr-detail {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .pnr-detail .label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .pnr-detail .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            margin-top: 5px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .top-nav {
@@ -681,7 +729,7 @@
             <div class="train-gallery">
                 <div class="train-card">
                     <div class="train-image">
-                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&h=300&fit=crop&crop=center" alt="Vande Bharat Express">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&h=500&q=80" alt="Vande Bharat Express">
                     </div>
                     <h3>Vande Bharat Express</h3>
                     <p>India's indigenous semi-high speed train offering world-class amenities and comfortable travel experience with state-of-the-art technology.</p>
@@ -705,7 +753,7 @@
 
                 <div class="train-card">
                     <div class="train-image">
-                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=500&h=300&fit=crop&crop=center" alt="Rajdhani Express">
+                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&h=500&q=80" alt="Rajdhani Express">
                     </div>
                     <h3>Rajdhani Express</h3>
                     <p>Premium luxury train connecting major cities with high-speed travel and excellent onboard services including meals and comfortable berths.</p>
@@ -729,7 +777,7 @@
 
                 <div class="train-card">
                     <div class="train-image">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=300&fit=crop&crop=center" alt="Shatabdi Express">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&h=500&q=80" alt="Shatabdi Express">
                     </div>
                     <h3>Shatabdi Express</h3>
                     <p>Day-time super-fast train service connecting major cities with air-conditioned comfort, catering services, and convenient timing.</p>
@@ -753,7 +801,7 @@
 
                 <div class="train-card">
                     <div class="train-image">
-                        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=500&h=300&fit=crop&crop=center" alt="Local Suburban Train">
+                        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&h=500&q=80" alt="Local Suburban Train">
                     </div>
                     <h3>Local/Suburban Trains</h3>
                     <p>Essential urban transport connecting millions of commuters daily across major metropolitan cities with frequent services.</p>
@@ -777,48 +825,48 @@
 
                 <div class="train-card">
                     <div class="train-image">
-                        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=500&h=300&fit=crop&crop=center" alt="Duronto Express">
+                        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&h=500&q=80" alt="Hubli Express">
                     </div>
-                    <h3>Duronto Express</h3>
-                    <p>Non-stop long-distance trains connecting major cities without intermediate commercial stops for faster journey times.</p>
+                    <h3>Hubli Express</h3>
+                    <p>Connects Bangalore to Hubli daily with comfortable seating and sleeper options. Popular among business travelers and families.</p>
                     <div class="train-features">
-                        <span class="feature-tag">120 km/h</span>
-                        <span class="feature-tag">Non-stop</span>
-                        <span class="feature-tag">Long Distance</span>
-                        <span class="feature-tag">Fast</span>
+                        <span class="feature-tag">110 km/h</span>
+                        <span class="feature-tag">Sleeper</span>
+                        <span class="feature-tag">Daily</span>
+                        <span class="feature-tag">Affordable</span>
                     </div>
                     <div class="train-specs">
                         <h4>Key Features:</h4>
                         <ul>
-                            <li>Direct connectivity between metros</li>
-                            <li>No intermediate commercial stops</li>
-                            <li>Multiple AC and sleeper options</li>
-                            <li>Faster travel times</li>
-                            <li>Modern amenities and services</li>
+                            <li>Daily service between Bangalore and Hubli</li>
+                            <li>AC and Sleeper class options</li>
+                            <li>Pantry car with regional cuisine</li>
+                            <li>Free WiFi in AC coaches</li>
+                            <li>On-time performance record</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="train-card">
                     <div class="train-image">
-                        <img src="https://images.unsplash.com/photo-1517263904808-5dc91e3e7044?w=500&h=300&fit=crop&crop=center" alt="Garib Rath Express">
+                        <img src="https://images.unsplash.com/photo-1517263904808-5dc91e3e7044?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&h=500&q=80" alt="Karnataka Sampark Kranti">
                     </div>
-                    <h3>Garib Rath Express</h3>
-                    <p>Budget-friendly AC train service providing air-conditioned travel at affordable prices with basic but comfortable amenities.</p>
+                    <h3>Karnataka Sampark Kranti</h3>
+                    <p>Premium express connecting Hubli to major cities across Karnataka with modern amenities and comfortable journey.</p>
                     <div class="train-features">
-                        <span class="feature-tag">100 km/h</span>
-                        <span class="feature-tag">Budget AC</span>
-                        <span class="feature-tag">Affordable</span>
-                        <span class="feature-tag">Value</span>
+                        <span class="feature-tag">120 km/h</span>
+                        <span class="feature-tag">AC Sleeper</span>
+                        <span class="feature-tag">Premium</span>
+                        <span class="feature-tag">Express</span>
                     </div>
                     <div class="train-specs">
                         <h4>Key Features:</h4>
                         <ul>
-                            <li>Air-conditioned coaches at budget prices</li>
-                            <li>Higher passenger capacity</li>
-                            <li>Basic but clean amenities</li>
-                            <li>Connects major cities affordably</li>
-                            <li>Popular among budget travelers</li>
+                            <li>Connects Hubli to Bangalore, Mysore, Mangalore</li>
+                            <li>Modern LHB coaches for safety</li>
+                            <li>Bio-toilets and clean facilities</li>
+                            <li>On-board charging points</li>
+                            <li>Priority for senior citizens</li>
                         </ul>
                     </div>
                 </div>
@@ -846,229 +894,315 @@
                         <p>Official safety instructions, travel tips, do's and don'ts from Indian Railways authorities.</p>
                     </div>
 
-                    <div class="service-card" onclick="showServicePage('booking')">
-                      <!-- Continue from where the code was incomplete -->
-<div class="service-card" onclick="showServicePage('pnrStatus')">
-    <span class="service-icon">🎫</span>
-    <h3>PNR Status Check</h3>
-    <p>Check your booking confirmation status, seat availability, and journey details using your 10-digit PNR number.</p>
-</div>
-</div>
+                    <div class="service-card" onclick="showServicePage('pnrStatus')">
+                        <span class="service-icon">🎫</span>
+                        <h3>PNR Status Check</h3>
+                        <p>Check your booking confirmation status, seat availability, and journey details using your 10-digit PNR number.</p>
+                    </div>
+                </div>
 
-<!-- Service Pages -->
-<div id="trainStatusPage" class="service-page" style="display: none;">
-    <h2>🚄 Live Train Status</h2>
-    <p>Track your train in real-time using the train number or name. Get accurate arrival/departure times at upcoming stations.</p>
-    
-    <div class="interactive-form">
-        <h3>Check Train Status</h3>
-        <input type="text" placeholder="Enter Train Number (e.g. 12045)" id="trainNumber">
-        <input type="text" placeholder="DD/MM/YYYY" id="trainDate">
-        <button onclick="checkTrainStatus()">Track Train</button>
-    </div>
-    
-    <h3>Features:</h3>
-    <ul>
-        <li>Real-time location on map</li>
-        <li>Next 3 stations with scheduled/actual times</li>
-        <li>Current running speed</li>
-        <li>Delay information</li>
-        <li>Platform number at destination</li>
-    </ul>
-</div>
+                <!-- Service Pages -->
+                <div id="trainStatusPage" class="service-page">
+                    <h2>🚄 Live Train Status</h2>
+                    <p>Track your train in real-time using the train number or name. Get accurate arrival/departure times at upcoming stations.</p>
+                    
+                    <div class="interactive-form">
+                        <h3>Check Train Status</h3>
+                        <input type="text" placeholder="Enter Train Number (e.g. 12045)" id="trainNumber">
+                        <input type="text" placeholder="DD/MM/YYYY" id="trainDate">
+                        <button onclick="checkTrainStatus()">Track Train</button>
+                    </div>
+                    
+                    <h3>Features:</h3>
+                    <ul>
+                        <li>Real-time location on map</li>
+                        <li>Next 3 stations with scheduled/actual times</li>
+                        <li>Current running speed</li>
+                        <li>Delay information</li>
+                        <li>Platform number at destination</li>
+                    </ul>
+                </div>
 
-<div id="emergencyPage" class="service-page" style="display: none;">
-    <h2>🚨 Emergency Contacts</h2>
-    <p>Important helpline numbers for immediate assistance during your train journey.</p>
-    
-    <div class="emergency-grid">
-        <div class="emergency-card">
-            <h4>Railway Protection Force (RPF)</h4>
-            <div class="number">182</div>
-            <p>Security emergencies</p>
+                <div id="emergencyPage" class="service-page">
+                    <h2>🚨 Emergency Contacts</h2>
+                    <p>Important helpline numbers for immediate assistance during your train journey.</p>
+                    
+                    <div class="emergency-grid">
+                        <div class="emergency-card">
+                            <h4>Railway Protection Force (RPF)</h4>
+                            <div class="number">182</div>
+                            <p>Security emergencies</p>
+                        </div>
+                        <div class="emergency-card">
+                            <h4>Medical Emergency</h4>
+                            <div class="number">138</div>
+                            <p>On-train medical assistance</p>
+                        </div>
+                        <div class="emergency-card">
+                            <h4>Women's Helpline</h4>
+                            <div class="number">1512</div>
+                            <p>24/7 assistance for women passengers</p>
+                        </div>
+                        <div class="emergency-card">
+                            <h4>General Enquiry</h4>
+                            <div class="number">139</div>
+                            <p>Train information & complaints</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Safety Tips:</h3>
+                    <ul>
+                        <li>Always note your coach and seat number</li>
+                        <li>Keep valuables secure while sleeping</li>
+                        <li>Verify TTE identity before sharing tickets</li>
+                        <li>Use chains to secure luggage</li>
+                        <li>Report suspicious activity to RPF immediately</li>
+                    </ul>
+                </div>
+
+                <div id="safetyPage" class="service-page">
+                    <h2>🛡️ Safety & Guidance</h2>
+                    <p>Official safety guidelines from Indian Railways for a secure journey.</p>
+                    
+                    <h3>Passenger Safety Guidelines</h3>
+                    <ul>
+                        <li>Board/deboard only when train is stationary</li>
+                        <li>Do not lean out of train doors/windows</li>
+                        <li>Use overhead racks only for light luggage</li>
+                        <li>Do not travel on train rooftops</li>
+                        <li>Keep children away from train doors</li>
+                        <li>Do not carry flammable materials</li>
+                    </ul>
+                    
+                    <h3>COVID-19 Precautions</h3>
+                    <ul>
+                        <li>Wear masks throughout the journey</li>
+                        <li>Use hand sanitizer frequently</li>
+                        <li>Maintain social distancing at stations</li>
+                        <li>Carry digital copy of vaccination certificate</li>
+                        <li>Use contactless payment methods</li>
+                    </ul>
+                </div>
+
+                <div id="pnrStatusPage" class="service-page">
+                    <h2>🎫 PNR Status Check</h2>
+                    <p>Check your booking status using your 10-digit PNR number</p>
+                    
+                    <div class="interactive-form">
+                        <h3>Check PNR Status</h3>
+                        <input type="text" placeholder="Enter 10-digit PNR Number" id="pnrNumber">
+                        <button onclick="checkPnrStatus()">Check Status</button>
+                    </div>
+                    
+                    <!-- PNR Result Container -->
+                    <div id="pnrResult" class="pnr-result">
+                        <h3>PNR Status Details</h3>
+                        <div class="pnr-details">
+                            <div class="pnr-detail">
+                                <div class="label">Train Name & Number</div>
+                                <div class="value" id="pnrTrain">Hubli Express #16535</div>
+                            </div>
+                            <div class="pnr-detail">
+                                <div class="label">From/To</div>
+                                <div class="value" id="pnrRoute">Bangalore to Hubli</div>
+                            </div>
+                            <div class="pnr-detail">
+                                <div class="label">Journey Date</div>
+                                <div class="value" id="pnrDate">15 July 2023</div>
+                            </div>
+                            <div class="pnr-detail">
+                                <div class="label">Class</div>
+                                <div class="value" id="pnrClass">Sleeper (SL)</div>
+                            </div>
+                            <div class="pnr-detail">
+                                <div class="label">Booking Status</div>
+                                <div class="value" id="pnrStatus">Confirmed</div>
+                            </div>
+                            <div class="pnr-detail">
+                                <div class="label">Seat/Coach</div>
+                                <div class="value" id="pnrSeat">B3, Seat 42</div>
+                            </div>
+                        </div>
+                        <p><strong>Note:</strong> Status is subject to change until chart preparation. Final status available 4 hours before departure.</p>
+                    </div>
+                    
+                    <div class="source-links">
+                        <h3>Official Resources:</h3>
+                        <a href="https://www.indianrail.gov.in" target="_blank">Indian Railways Official Website</a>
+                        <a href="https://www.irctc.co.in" target="_blank">IRCTC Booking Portal</a>
+                        <a href="https://www.ntes.indianrailways.gov.in" target="_blank">National Train Enquiry System</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="emergency-card">
-            <h4>Medical Emergency</h4>
-            <div class="number">138</div>
-            <p>On-train medical assistance</p>
-        </div>
-        <div class="emergency-card">
-            <h4>Women's Helpline</h4>
-            <div class="number">1512</div>
-            <p>24/7 assistance for women passengers</p>
-        </div>
-        <div class="emergency-card">
-            <h4>General Enquiry</h4>
-            <div class="number">139</div>
-            <p>Train information & complaints</p>
-        </div>
     </div>
-    
-    <h3>Safety Tips:</h3>
-    <ul>
-        <li>Always note your coach and seat number</li>
-        <li>Keep valuables secure while sleeping</li>
-        <li>Verify TTE identity before sharing tickets</li>
-        <li>Use chains to secure luggage</li>
-        <li>Report suspicious activity to RPF immediately</li>
-    </ul>
-</div>
 
-<div id="safetyPage" class="service-page" style="display: none;">
-    <h2>🛡️ Safety & Guidance</h2>
-    <p>Official safety guidelines from Indian Railways for a secure journey.</p>
-    
-    <h3>Passenger Safety Guidelines</h3>
-    <ul>
-        <li>Board/deboard only when train is stationary</li>
-        <li>Do not lean out of train doors/windows</li>
-        <li>Use overhead racks only for light luggage</li>
-        <li>Do not travel on train rooftops</li>
-        <li>Keep children away from train doors</li>
-        <li>Do not carry flammable materials</li>
-    </ul>
-    
-    <h3>COVID-19 Precautions</h3>
-    <ul>
-        <li>Wear masks throughout the journey</li>
-        <li>Use hand sanitizer frequently</li>
-        <li>Maintain social distancing at stations</li>
-        <li>Carry digital copy of vaccination certificate</li>
-        <li>Use contactless payment methods</li>
-    </ul>
-</div>
-
-<div id="pnrStatusPage" class="service-page" style="display: none;">
-    <h2>🎫 PNR Status Check</h2>
-    <p>Check your booking status using your 10-digit PNR number</p>
-    
-    <div class="interactive-form">
-        <h3>Check PNR Status</h3>
-        <input type="text" placeholder="Enter 10-digit PNR Number" id="pnrNumber">
-        <button onclick="checkPnrStatus()">Check Status</button>
+    <!-- Navigation Helper -->
+    <div class="nav-center">
+        <button class="nav-corner-btn home-btn" id="centerHomeBtn" onclick="goHome()">🏠 Home</button>
     </div>
-    
-    <h3>Information Provided:</h3>
-    <ul>
-        <li>Booking status: Confirmed/Waitlist/RAC</li>
-        <li>Current seat/berth number</li>
-        <li>Coach position</li>
-        <li>Chances of confirmation</li>
-        <li>Train schedule and route</li>
-    </ul>
-    
-    <div class="source-links">
-        <h3>Official Resources:</h3>
-        <a href="https://www.indianrail.gov.in" target="_blank">Indian Railways Official Website</a>
-        <a href="https://www.irctc.co.in" target="_blank">IRCTC Booking Portal</a>
-        <a href="https://www.ntes.indianrailways.gov.in" target="_blank">National Train Enquiry System</a>
-    </div>
-</div>
-</div> <!-- Close services-section -->
-</div> <!-- Close mainDashboard -->
 
-<!-- Navigation Helper -->
-<div class="nav-center">
-    <button class="nav-corner-btn home-btn" id="centerHomeBtn" onclick="goHome()">🏠 Home</button>
-</div>
-</div> <!-- Close container -->
-
-<script>
-    // Page Navigation Functions
-    function goBack() {
-        const pages = document.querySelectorAll('.page');
-        const activePage = document.querySelector('.page.active');
-        
-        if (activePage.id === 'verificationPage') {
-            showPage('loginPage');
-        } else if (activePage.id.startsWith('mainDashboard')) {
-            document.querySelector('.service-page:not([style*="none"])') 
-                ? hideServicePages() 
-                : showPage('loginPage');
+    <script>
+        // Page Navigation Functions
+        function goBack() {
+            const pages = document.querySelectorAll('.page');
+            const activePage = document.querySelector('.page.active');
+            
+            if (activePage.id === 'verificationPage') {
+                showPage('loginPage');
+            } else if (activePage.id === 'mainDashboard') {
+                if (document.querySelector('.service-page.active')) {
+                    hideServicePages();
+                } else {
+                    showPage('loginPage');
+                }
+            }
         }
-    }
 
-    function goHome() {
-        hideServicePages();
-        document.getElementById('homeBtn').style.display = 'none';
-    }
-
-    function logout() {
-        showPage('loginPage');
-        document.querySelectorAll('.nav-corner-btn').forEach(btn => {
-            btn.style.display = 'none';
-        });
-    }
-
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
-        document.getElementById(pageId).classList.add('active');
-        
-        // Update navigation buttons
-        if (pageId === 'mainDashboard') {
-            document.querySelectorAll('.nav-corner-btn').forEach(btn => {
-                btn.style.display = 'block';
-            });
+        function goHome() {
+            hideServicePages();
             document.getElementById('homeBtn').style.display = 'none';
-            document.querySelector('.nav-center').style.display = 'block';
-        } else {
             document.querySelector('.nav-center').style.display = 'none';
         }
-    }
 
-    function showServicePage(serviceId) {
-        hideServicePages();
-        document.getElementById(serviceId + 'Page').style.display = 'block';
-        document.getElementById('homeBtn').style.display = 'block';
-        document.querySelector('.nav-center').style.display = 'none';
-    }
+        function logout() {
+            showPage('loginPage');
+            document.querySelectorAll('.nav-corner-btn').forEach(btn => {
+                btn.style.display = 'none';
+            });
+        }
 
-    function hideServicePages() {
-        document.querySelectorAll('.service-page').forEach(page => {
-            page.style.display = 'none';
-        });
-    }
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation buttons
+            if (pageId === 'mainDashboard') {
+                document.querySelectorAll('.nav-corner-btn').forEach(btn => {
+                    btn.style.display = 'block';
+                });
+                document.getElementById('homeBtn').style.display = 'none';
+                document.querySelector('.nav-center').style.display = 'none';
+                hideServicePages();
+            } else {
+                document.querySelector('.nav-center').style.display = 'none';
+            }
+        }
 
-    // Login Flow
-    function proceedToVerification(e) {
-        e.preventDefault();
-        showPage('verificationPage');
-    }
+        function showServicePage(serviceId) {
+            // Hide all service pages
+            document.querySelectorAll('.service-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the requested service page
+            document.getElementById(serviceId + 'Page').classList.add('active');
+            
+            // Show the home button
+            document.getElementById('homeBtn').style.display = 'block';
+            document.querySelector('.nav-center').style.display = 'block';
+        }
 
-    function verifyWithGoogle() {
-        alert('Google verification selected. Redirecting...');
-        showDashboard();
-    }
+        function hideServicePages() {
+            document.querySelectorAll('.service-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('homeBtn').style.display = 'none';
+            document.querySelector('.nav-center').style.display = 'none';
+            document.getElementById('pnrResult').classList.remove('active');
+        }
 
-    function verifyWithFacebook() {
-        alert('Facebook verification selected. Redirecting...');
-        showDashboard();
-    }
+        // Login Flow
+        function proceedToVerification(e) {
+            e.preventDefault();
+            showPage('verificationPage');
+        }
 
-    function verifyWithEmail() {
-        alert('OTP sent to registered email. Please check your inbox.');
-        showDashboard();
-    }
+        function verifyWithGoogle() {
+            alert('Google verification selected. Redirecting...');
+            showDashboard();
+        }
 
-    function skipVerification() {
-        alert('Entering demo mode with sample data');
-        showDashboard();
-    }
+        function verifyWithFacebook() {
+            alert('Facebook verification selected. Redirecting...');
+            showDashboard();
+        }
 
-    function showDashboard() {
-        showPage('mainDashboard');
-    }
+        function verifyWithEmail() {
+            alert('OTP sent to registered email. Please check your inbox.');
+            showDashboard();
+        }
 
-    // Demo Functions
-    function checkTrainStatus() {
-        alert('Train status feature would show real-time data in production');
-    }
+        function skipVerification() {
+            alert('Entering demo mode with sample data');
+            showDashboard();
+        }
 
-    function checkPnrStatus() {
-        alert('PNR status feature would show booking details in production');
-    }
-</script>
+        function showDashboard() {
+            showPage('mainDashboard');
+        }
+
+        // Demo Functions
+        function checkTrainStatus() {
+            const trainNumber = document.getElementById('trainNumber').value;
+            if (!trainNumber) {
+                alert('Please enter a train number');
+                return;
+            }
+            alert(`Train status for ${trainNumber} would show real-time data in production`);
+        }
+
+        function checkPnrStatus() {
+            const pnrNumber = document.getElementById('pnrNumber').value;
+            
+            if (!pnrNumber || pnrNumber.length !== 10) {
+                alert('Please enter a valid 10-digit PNR number');
+                return;
+            }
+            
+            // Simulate PNR status lookup
+            const trains = [
+                "Hubli Express #16535", 
+                "Karnataka Sampark Kranti #12650", 
+                "Shatabdi Express #12045",
+                "Rajdhani Express #12345"
+            ];
+            
+            const routes = [
+                "Bangalore to Hubli", 
+                "Hubli to Bangalore", 
+                "Hubli to Mumbai", 
+                "Bangalore to Chennai"
+            ];
+            
+            const statuses = ["Confirmed", "Waitlist (WL 5)", "RAC (RAC 3)", "Cancelled"];
+            const classes = ["Sleeper (SL)", "AC 3 Tier (3A)", "AC 2 Tier (2A)", "First AC (1A)"];
+            const seats = ["B3, Seat 42", "A2, Seat 18", "C1, Seat 7", "D4, Seat 22"];
+            
+            // Random selection for demo
+            const randomIndex = Math.floor(Math.random() * 4);
+            
+            // Update PNR details
+            document.getElementById('pnrTrain').textContent = trains[randomIndex];
+            document.getElementById('pnrRoute').textContent = routes[randomIndex];
+            document.getElementById('pnrDate').textContent = "15 July 2023";
+            document.getElementById('pnrClass').textContent = classes[randomIndex];
+            document.getElementById('pnrStatus').textContent = statuses[randomIndex];
+            document.getElementById('pnrSeat').textContent = seats[randomIndex];
+            
+            // Show result
+            document.getElementById('pnrResult').classList.add('active');
+            
+            // Scroll to result
+            document.getElementById('pnrResult').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialize navigation buttons
+        window.onload = function() {
+            document.getElementById('backBtn').style.display = 'block';
+        };
+    </script>
 </body>
-</html>               
+</html>
