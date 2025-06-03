@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
+            overflow-x: hidden;
         }
 
         .container {
@@ -46,7 +47,6 @@
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: none;
         }
 
         .nav-corner-btn:hover {
@@ -71,9 +71,9 @@
 
         /* Page Structure */
         .page {
-            display: none;
             min-height: 100vh;
             padding-top: 80px;
+            display: none;
         }
 
         .page.active {
@@ -99,6 +99,12 @@
             width: 100%;
             max-width: 450px;
             text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-container h1 {
@@ -179,6 +185,7 @@
             width: 100%;
             max-width: 500px;
             text-align: center;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .verification-container h2 {
@@ -267,6 +274,7 @@
         .hero-section {
             text-align: center;
             margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .hero-section h1 {
@@ -288,6 +296,7 @@
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
+            animation: fadeIn 1s ease-out;
         }
 
         .train-card {
@@ -414,6 +423,7 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             transition: all 0.3s ease;
             cursor: pointer;
+            animation: fadeIn 1.2s ease-out;
         }
 
         .service-card:hover {
@@ -499,7 +509,13 @@
             width: calc(50% - 10px);
         }
 
-        .interactive-form input::placeholder {
+        .interactive-form textarea {
+            width: 100%;
+            height: 150px;
+            resize: vertical;
+        }
+
+        .interactive-form input::placeholder, .interactive-form textarea::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
 
@@ -628,6 +644,58 @@
             margin-top: 5px;
         }
 
+        /* Feedback Form */
+        .feedback-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        .feedback-form label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .feedback-form input, .feedback-form select, .feedback-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            font-size: 30px;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star.active, .star:hover {
+            color: #ffd700;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .top-nav {
@@ -655,6 +723,10 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .login-container, .verification-container {
+                padding: 30px;
+            }
         }
     </style>
 </head>
@@ -662,7 +734,7 @@
     <!-- Top Navigation -->
     <div class="top-nav">
         <button class="nav-corner-btn back-btn" id="backBtn" onclick="goBack()">← Back</button>
-        <button class="nav-corner-btn home-btn" id="homeBtn" onclick="goHome()" style="display: none;">🏠 Home</button>
+        <button class="nav-corner-btn home-btn" id="homeBtn" onclick="goHome()">🏠 Home</button>
         <button class="nav-corner-btn logout-btn" id="logoutBtn" onclick="logout()">Logout</button>
     </div>
 
@@ -899,6 +971,12 @@
                         <h3>PNR Status Check</h3>
                         <p>Check your booking confirmation status, seat availability, and journey details using your 10-digit PNR number.</p>
                     </div>
+                    
+                    <div class="service-card" onclick="showServicePage('feedback')">
+                        <span class="service-icon">💬</span>
+                        <h3>Feedback & Suggestions</h3>
+                        <p>Share your experience, suggestions, or report issues to help us improve Indian Railways services.</p>
+                    </div>
                 </div>
 
                 <!-- Service Pages -->
@@ -1033,13 +1111,72 @@
                         <a href="https://www.ntes.indianrailways.gov.in" target="_blank">National Train Enquiry System</a>
                     </div>
                 </div>
+                
+                <!-- Feedback Page -->
+                <div id="feedbackPage" class="service-page">
+                    <h2>💬 Feedback & Suggestions</h2>
+                    <p>Your feedback helps us improve Indian Railways services. Please share your experience or suggestions.</p>
+                    
+                    <div class="feedback-form">
+                        <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                            <div class="form-group">
+                                <label for="feedbackType">Feedback Type</label>
+                                <select id="feedbackType" required>
+                                    <option value="">Select feedback type</option>
+                                    <option value="complaint">Complaint</option>
+                                    <option value="suggestion">Suggestion</option>
+                                    <option value="appreciation">Appreciation</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="feedbackTrain">Train Number/Name (Optional)</label>
+                                <input type="text" id="feedbackTrain" placeholder="e.g. Rajdhani Express #12345">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="feedbackJourney">Journey Details (Optional)</label>
+                                <input type="text" id="feedbackJourney" placeholder="e.g. Mumbai to Delhi, 15 July 2023">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Overall Experience Rating</label>
+                                <div class="rating-stars">
+                                    <span class="star" onclick="setRating(1)">★</span>
+                                    <span class="star" onclick="setRating(2)">★</span>
+                                    <span class="star" onclick="setRating(3)">★</span>
+                                    <span class="star" onclick="setRating(4)">★</span>
+                                    <span class="star" onclick="setRating(5)">★</span>
+                                </div>
+                                <input type="hidden" id="ratingValue" value="0">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="feedbackMessage">Your Feedback/Suggestion</label>
+                                <textarea id="feedbackMessage" placeholder="Please provide details of your experience..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="login-btn">Submit Feedback</button>
+                        </form>
+                        
+                        <div id="feedbackSuccess" class="success-message">
+                            <h3>Thank You for Your Feedback!</h3>
+                            <p>We have received your valuable feedback and will use it to improve our services.</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Feedback Guidelines:</h3>
+                    <ul>
+                        <li>Be specific about your experience</li>
+                        <li>Mention date and train number if possible</li>
+                        <li>Suggest constructive improvements</li>
+                        <li>Provide contact information if you'd like a response</li>
+                        <li>We value all feedback - both positive and negative</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Navigation Helper -->
-    <div class="nav-center">
-        <button class="nav-corner-btn home-btn" id="centerHomeBtn" onclick="goHome()">🏠 Home</button>
     </div>
 
     <script>
@@ -1061,15 +1198,13 @@
 
         function goHome() {
             hideServicePages();
-            document.getElementById('homeBtn').style.display = 'none';
-            document.querySelector('.nav-center').style.display = 'none';
         }
 
         function logout() {
             showPage('loginPage');
-            document.querySelectorAll('.nav-corner-btn').forEach(btn => {
-                btn.style.display = 'none';
-            });
+            // Clear form fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
         }
 
         function showPage(pageId) {
@@ -1078,16 +1213,9 @@
             });
             document.getElementById(pageId).classList.add('active');
             
-            // Update navigation buttons
-            if (pageId === 'mainDashboard') {
-                document.querySelectorAll('.nav-corner-btn').forEach(btn => {
-                    btn.style.display = 'block';
-                });
-                document.getElementById('homeBtn').style.display = 'none';
-                document.querySelector('.nav-center').style.display = 'none';
+            // Hide service pages when switching main pages
+            if (pageId !== 'mainDashboard') {
                 hideServicePages();
-            } else {
-                document.querySelector('.nav-center').style.display = 'none';
             }
         }
 
@@ -1100,18 +1228,16 @@
             // Show the requested service page
             document.getElementById(serviceId + 'Page').classList.add('active');
             
-            // Show the home button
-            document.getElementById('homeBtn').style.display = 'block';
-            document.querySelector('.nav-center').style.display = 'block';
+            // Scroll to the service section
+            document.getElementById(serviceId + 'Page').scrollIntoView({ behavior: 'smooth' });
         }
 
         function hideServicePages() {
             document.querySelectorAll('.service-page').forEach(page => {
                 page.classList.remove('active');
             });
-            document.getElementById('homeBtn').style.display = 'none';
-            document.querySelector('.nav-center').style.display = 'none';
             document.getElementById('pnrResult').classList.remove('active');
+            document.getElementById('feedbackSuccess').style.display = 'none';
         }
 
         // Login Flow
@@ -1121,22 +1247,22 @@
         }
 
         function verifyWithGoogle() {
-            alert('Google verification selected. Redirecting...');
+            alert('Google verification selected. Redirecting to dashboard...');
             showDashboard();
         }
 
         function verifyWithFacebook() {
-            alert('Facebook verification selected. Redirecting...');
+            alert('Facebook verification selected. Redirecting to dashboard...');
             showDashboard();
         }
 
         function verifyWithEmail() {
-            alert('OTP sent to registered email. Please check your inbox.');
+            alert('OTP sent to registered email. Please check your inbox. Redirecting to dashboard...');
             showDashboard();
         }
 
         function skipVerification() {
-            alert('Entering demo mode with sample data');
+            alert('Entering demo mode with sample data. Redirecting to dashboard...');
             showDashboard();
         }
 
@@ -1199,9 +1325,48 @@
             document.getElementById('pnrResult').scrollIntoView({ behavior: 'smooth' });
         }
         
+        // Feedback Functions
+        function setRating(rating) {
+            // Reset all stars
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => star.classList.remove('active'));
+            
+            // Set active stars
+            for (let i = 0; i < rating; i++) {
+                stars[i].classList.add('active');
+            }
+            
+            // Set rating value
+            document.getElementById('ratingValue').value = rating;
+        }
+        
+        function submitFeedback(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const feedbackType = document.getElementById('feedbackType').value;
+            const rating = document.getElementById('ratingValue').value;
+            
+            // Show success message
+            document.getElementById('feedbackSuccess').style.display = 'block';
+            
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                document.getElementById('feedbackForm').reset();
+                document.getElementById('feedbackSuccess').style.display = 'none';
+                
+                // Reset stars
+                const stars = document.querySelectorAll('.star');
+                stars.forEach(star => star.classList.remove('active'));
+                document.getElementById('ratingValue').value = 0;
+            }, 3000);
+        }
+        
         // Initialize navigation buttons
         window.onload = function() {
             document.getElementById('backBtn').style.display = 'block';
+            document.getElementById('homeBtn').style.display = 'block';
+            document.getElementById('logoutBtn').style.display = 'block';
         };
     </script>
 </body>
