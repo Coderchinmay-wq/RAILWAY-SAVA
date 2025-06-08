@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RailSeva - Indian Railways Passenger Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -78,6 +79,10 @@
 
         .page.active {
             display: block;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         /* Page 1: Login */
@@ -759,7 +764,7 @@
         </div>
 
         <!-- Page 2: Verification -->
-        <div id="verificationPage" class="page verification-page">
+        <div id="verificationPage" class="page verification-page hidden">
             <div class="verification-container">
                 <h2>🔐 Account Verification</h2>
                 <p>Please verify your account using one of the following methods to ensure secure access to RailSeva services.</p>
@@ -790,7 +795,7 @@
         </div>
 
         <!-- Page 3: Main Dashboard -->
-        <div id="mainDashboard" class="page main-dashboard">
+        <div id="mainDashboard" class="page main-dashboard hidden">
             <!-- Hero Section -->
             <div class="hero-section">
                 <h1>Welcome to RailSeva</h1>
@@ -1180,38 +1185,62 @@
     </div>
 
     <script>
+        // Track authentication state
+        let isAuthenticated = false;
+
         // Page Navigation Functions
         function goBack() {
-            const pages = document.querySelectorAll('.page');
-            const activePage = document.querySelector('.page.active');
-            
-            if (activePage.id === 'verificationPage') {
-                showPage('loginPage');
-            } else if (activePage.id === 'mainDashboard') {
-                if (document.querySelector('.service-page.active')) {
-                    hideServicePages();
-                } else {
+            if (isAuthenticated) {
+                // If logged in, back button just closes service pages
+                hideServicePages();
+            } else {
+                // Not logged in - normal back navigation
+                const activePage = document.querySelector('.page.active:not(.hidden)');
+                
+                if (activePage.id === 'verificationPage') {
                     showPage('loginPage');
+                } else if (activePage.id === 'mainDashboard') {
+                    showPage('verificationPage');
                 }
             }
         }
 
         function goHome() {
-            hideServicePages();
+            if (isAuthenticated) {
+                showPage('mainDashboard');
+                hideServicePages();
+            } else {
+                showPage('loginPage');
+            }
         }
 
         function logout() {
-            showPage('loginPage');
+            isAuthenticated = false;
+            // Hide all pages except login
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('active');
+            });
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('loginPage').classList.add('active');
+            
             // Clear form fields
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
+            
+            // Show logout message
+            alert('You have been successfully logged out!');
         }
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
                 page.classList.remove('active');
             });
-            document.getElementById(pageId).classList.add('active');
+            
+            const page = document.getElementById(pageId);
+            page.classList.remove('hidden');
+            page.classList.add('active');
             
             // Hide service pages when switching main pages
             if (pageId !== 'mainDashboard') {
@@ -1243,30 +1272,40 @@
         // Login Flow
         function proceedToVerification(e) {
             e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (!username || !password) {
+                alert('Please enter both username and password');
+                return;
+            }
+            
             showPage('verificationPage');
         }
 
         function verifyWithGoogle() {
             alert('Google verification selected. Redirecting to dashboard...');
-            showDashboard();
+            completeLogin();
         }
 
         function verifyWithFacebook() {
             alert('Facebook verification selected. Redirecting to dashboard...');
-            showDashboard();
+            completeLogin();
         }
 
         function verifyWithEmail() {
             alert('OTP sent to registered email. Please check your inbox. Redirecting to dashboard...');
-            showDashboard();
+            completeLogin();
         }
 
         function skipVerification() {
             alert('Entering demo mode with sample data. Redirecting to dashboard...');
-            showDashboard();
+            completeLogin();
         }
 
-        function showDashboard() {
+        function completeLogin() {
+            isAuthenticated = true;
             showPage('mainDashboard');
         }
 
